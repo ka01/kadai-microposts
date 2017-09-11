@@ -146,6 +146,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         Collective\Html\HtmlServiceProvider::class,
+        
+        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
 
     ],
 
@@ -197,6 +199,8 @@ return [
         
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
+        
+        'Gravatar'  => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
 
     ],
 
