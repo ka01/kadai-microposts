@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Micropost;
 use App\Http\Controllers\Controller;
 
-class MicropostsController extends Controller
+class UserFavoriteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,17 +35,10 @@ class MicropostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $this->validate($request, [
-            'content' => 'required|max:255',
-            ]);
-            
-            $request->user()->microposts()->create([
-                'content' => $request->content,
-            ]);
-            
-            return redirect('/');
+        \Auth::user()->favorite($id);
+        return redirect()->back();
     }
 
     /**
@@ -91,19 +83,7 @@ class MicropostsController extends Controller
      */
     public function destroy($id)
     {
-        $micropost = Micropost::find($id);
-        
-        if (\Auth::user()->id === $micropost->user_id) {
-            $micropost->delete();
-        }
-        
+        \Auth::user()->unfavorite($id);
         return redirect()->back();
     }
-    
-    public function counts($micropost) {
-        $count_favored = $micropost->favored()->count();
-        return ['count_favored' => $count_favored,];
-    }
-    
-    
 }

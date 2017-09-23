@@ -52,10 +52,14 @@ class UsersController extends Controller
     
     public function followers($id)
     {
+        
+        
         $user = User::find($id);
         $followers = $user->followers()->paginate(10);
         
+        
         $data = [
+            
             'user' => $user,
             'users' => $followers,
         ];
@@ -64,4 +68,29 @@ class UsersController extends Controller
         
         return view('users.followers', $data);
     }
+    
+    
+    //追加：お気に入りリスト
+    public function favors($id)
+    {
+        $user = User::find($id);
+        $microposts = $user->favors()->paginate(10);
+        
+        //ダメだった$microposts = $favors->feed_microposts()->orderBy('created_at', 'desc')->paginate(10);
+        
+       
+        $data = [
+            'user' => $user,
+            'microposts' => $microposts,
+            //ダメだった'microposts' => $microposts,
+        ];
+        
+        // ↑をmicropostsに変更したら、users/favors.blade.phpでも呼び出す際の変数名を変更する必要あり
+        
+        // タブの中のバッジのカウント数を表示させるための処理
+        $data += $this->counts($user);
+        
+        return view('users.favors', $data);
+    }
+    
 }

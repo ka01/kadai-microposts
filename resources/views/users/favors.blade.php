@@ -20,7 +20,10 @@
                 <li role="presentation" class="{{ Request::is('users/*/followers') ? 'active' : '' }}"><a href="{{ route('users.followers', ['id' => $user->id]) }}">Followers <span class="badge">{{ $count_followers }}</span></a></li>
                 <li role="presentation" class="{{ Request::is('users/*/favors') ? 'active' : '' }}"><a href="{{ route('users.favors', ['id' => $user->id]) }}">Favors <span class="badge">{{ $count_favors }}</span></a></li>
             </ul>
-            @include('users.users', ['users' => $users])
+            @include('microposts.microposts', ['microposts' => $microposts])
+            
+             <!-- $users →　$microposts　に変更されましたね。OKです -->
+            
         </div>
     </div>
 @endsection
